@@ -1,0 +1,430 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- Map Section -->
+    <div class="mb-12">
+        <div class="treasure-card rounded-3xl shadow-2xl p-8 relative overflow-hidden">
+            <!-- Decorative border -->
+            <div class="absolute inset-0 border-4 border-sky-200/30 rounded-3xl pointer-events-none">
+                <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-sky-400/40 rounded-tl-2xl"></div>
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-sky-400/40 rounded-tr-2xl"></div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-sky-400/40 rounded-bl-2xl"></div>
+                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-sky-400/40 rounded-br-2xl"></div>
+            </div>
+
+            <h2 class="text-3xl font-semibold mb-6 bg-gradient-to-r from-sky-400 via-blue-500 to-blue-600 bg-clip-text text-transparent flex items-center">
+                <i class="fas fa-globe mr-3 text-sky-500 animate-glow"></i>
+                Global Mineral Deposits
+            </h2>
+
+            <!-- Map Controls -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="flex space-x-2">
+                    <div class="flex-1">
+                        <input type="number" id="latitude" placeholder="Latitude" step="0.000001" min="-90" max="90"
+                            class="w-full px-4 py-2 border-2 border-sky-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/70 backdrop-blur-sm"
+                        >
+                    </div>
+                    <div class="flex-1">
+                        <input type="number" id="longitude" placeholder="Longitude" step="0.000001" min="-180" max="180"
+                            class="w-full px-4 py-2 border-2 border-sky-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/70 backdrop-blur-sm"
+                        >
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="showPoint" class="flex-1 px-4 py-2 bg-sky-500 text-white rounded-xl hover:bg-sky-600 transition-colors">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Show Point
+                    </button>
+                    <button id="clearPoint" class="px-4 py-2 bg-red-500 text-white rounded-xl hover:bg-red-600 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="flex space-x-2">
+                    <button id="zoomIn" class="px-4 py-2 bg-sky-500 text-white rounded-xl hover:bg-sky-600 transition-colors">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                    <button id="zoomOut" class="px-4 py-2 bg-sky-500 text-white rounded-xl hover:bg-sky-600 transition-colors">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button id="resetView" class="px-4 py-2 bg-sky-500 text-white rounded-xl hover:bg-sky-600 transition-colors">
+                        <i class="fas fa-home"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Map Container -->
+            <div id="map" class="w-full h-[600px] rounded-2xl overflow-hidden border-2 border-sky-200"></div>
+        </div>
+    </div>
+
+    <!-- Prediction Form Section -->
+    <div x-data="{
+        formData: {
+            'Geophysical Data': '',
+            'Pathfinder Elements': '',
+            'Geochemical Results': '',
+            'Geological Features': '',
+            'Host Rocks': '',
+            'Stratigraphy': '',
+            'Tectonic Settings': ''
+        },
+        loading: false,
+        result: null,
+        async submitForm() {
+            this.loading = true;
+            try {
+                const response = await fetch('/api/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(this.formData)
+                });
+                this.result = await response.json();
+            } catch (error) {
+                console.error('Error:', error);
+            }
+            this.loading = false;
+        }
+    }" class="max-w-5xl mx-auto relative">
+        <!-- Decorative Elements -->
+        <div class="absolute top-20 -left-20 w-64 h-64 bg-sky-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute bottom-20 -right-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+
+        <!-- Hero Section -->
+        <div class="text-center mb-12 relative">
+            <h1 class="text-6xl font-bold bg-gradient-to-r from-sky-300 via-blue-400 to-blue-500 bg-clip-text text-transparent animate-float relative inline-block">
+                Embark on Your Quest
+                <span class="absolute -top-6 -right-6 text-4xl animate-sparkle">✨</span>
+                <span class="absolute -bottom-6 -left-6 text-4xl animate-sparkle" style="animation-delay: 0.5s">✨</span>
+            </h1>
+            <p class="text-xl text-blue-100 mt-4 max-w-2xl mx-auto">
+                Input your geological data and let our AI reveal the hidden treasures beneath the Earth
+            </p>
+        </div>
+
+        <div class="treasure-card rounded-3xl shadow-2xl p-12 mb-12 relative overflow-hidden group">
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-sky-200/20 to-transparent transform rotate-45 translate-x-48 -translate-y-48"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-blue-200/20 to-transparent transform -rotate-45 -translate-x-48 translate-y-48"></div>
+            
+            <!-- Map-like decorative border -->
+            <div class="absolute inset-0 border-4 border-sky-200/30 rounded-3xl pointer-events-none">
+                <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-sky-400/40 rounded-tl-2xl"></div>
+                <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-sky-400/40 rounded-tr-2xl"></div>
+                <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-sky-400/40 rounded-bl-2xl"></div>
+                <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-sky-400/40 rounded-br-2xl"></div>
+            </div>
+
+            <form @submit.prevent="submitForm" class="space-y-8 relative">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <template x-for="(value, key) in formData" :key="key">
+                        <div class="group/field transform transition-all duration-300 hover:-translate-y-1">
+                            <label :for="key" class="block text-lg font-medium mb-3 bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent group-hover/field:from-blue-600 group-hover/field:to-blue-800 transition-all" x-text="key"></label>
+                            <div class="relative">
+                                <textarea
+                                    :id="key"
+                                    x-model="formData[key]"
+                                    class="w-full px-6 py-4 border-2 border-sky-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white/70 backdrop-blur-sm transition-all duration-300 group-hover/field:border-blue-300 text-gray-700"
+                                    rows="3"
+                                    required
+                                    :placeholder="'Enter ' + key.toLowerCase()"
+                                ></textarea>
+                                <div class="absolute inset-0 border-2 border-transparent group-hover/field:border-blue-200/50 rounded-xl pointer-events-none transition-all duration-300"></div>
+                                <!-- Decorative corner -->
+                                <div class="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-sky-400/40 rounded-tl group-hover/field:border-blue-400/40 transition-colors"></div>
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-sky-400/40 rounded-br group-hover/field:border-blue-400/40 transition-colors"></div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <div class="flex justify-center mt-12">
+                    <button
+                        type="submit"
+                        class="px-12 py-5 bg-gradient-to-r from-sky-400 to-blue-500 text-white text-lg font-semibold rounded-xl hover:from-sky-500 hover:to-blue-600 transition-all transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
+                        :disabled="loading"
+                    >
+                        <span class="relative z-10 flex items-center justify-center space-x-2">
+                            <span x-show="!loading" class="flex items-center">
+                                <i class="fas fa-gem mr-2 animate-glow"></i>
+                                <span>Uncover Treasures</span>
+                            </span>
+                            <span x-show="loading" class="flex items-center">
+                                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Revealing Treasures...
+                            </span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-sky-300 to-blue-300 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div x-show="result" x-cloak 
+             x-transition:enter="transition ease-out duration-500"
+             x-transition:enter-start="opacity-0 transform translate-y-8"
+             x-transition:enter-end="opacity-100 transform translate-y-0"
+             class="crystal-card rounded-3xl shadow-2xl p-12 relative overflow-hidden group">
+            
+            <!-- Decorative Elements for Results -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-sky-200/20 to-transparent transform rotate-45 translate-x-32 -translate-y-32"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-200/20 to-transparent transform -rotate-45 -translate-x-32 translate-y-32"></div>
+            
+            <h2 class="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-sky-400 via-blue-500 to-blue-600 bg-clip-text text-transparent relative inline-block">
+                Discovered Treasures
+                <span class="absolute -top-4 -right-4 text-3xl animate-sparkle">✨</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="treasure-card p-8 rounded-2xl border-2 border-sky-200/50 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group/result">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
+                        <i class="fas fa-gem mr-3 text-sky-500 animate-glow"></i>
+                        Predicted Mineralogy
+                    </h3>
+                    <p class="text-gray-700 font-medium bg-white/60 backdrop-blur-sm p-4 rounded-xl border border-sky-100" x-text="result?.mineralogy"></p>
+                    <div class="absolute inset-0 border-2 border-transparent group-hover/result:border-sky-300/50 rounded-2xl pointer-events-none transition-all duration-300"></div>
+                </div>
+                
+                <div class="crystal-card p-8 rounded-2xl border-2 border-blue-200/50 transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl group/result">
+                    <h3 class="text-xl font-semibold text-blue-800 mb-4 flex items-center">
+                        <i class="fas fa-chart-pie mr-3 text-blue-500 animate-glow"></i>
+                        Product Type
+                    </h3>
+                    <p class="text-gray-700 font-medium bg-white/60 backdrop-blur-sm p-4 rounded-xl border border-blue-100" x-text="result?.product_type"></p>
+                    <div class="absolute inset-0 border-2 border-transparent group-hover/result:border-blue-300/50 rounded-2xl pointer-events-none transition-all duration-300"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add ArcGIS API for JavaScript -->
+<link rel="stylesheet" href="https://js.arcgis.com/4.27/esri/themes/dark/main.css">
+<script src="https://js.arcgis.com/4.27/"></script>
+
+<script>
+require([
+    "esri/Map",
+    "esri/views/SceneView",
+    "esri/layers/GraphicsLayer",
+    "esri/Graphic",
+    "esri/geometry/Point",
+    "esri/symbols/ObjectSymbol3DLayer",
+    "esri/symbols/PointSymbol3D",
+    "esri/widgets/Home",
+    "esri/widgets/BasemapGallery",
+    "esri/widgets/CoordinateConversion"
+], function(Map, SceneView, GraphicsLayer, Graphic, Point, ObjectSymbol3DLayer, PointSymbol3D, Home, BasemapGallery, CoordinateConversion) {
+    
+    // Create the map
+    const map = new Map({
+        basemap: "satellite",
+        ground: "world-elevation"
+    });
+
+    // Create the 3D view
+    const view = new SceneView({
+        container: "map",
+        map: map,
+        camera: {
+            position: {
+                x: 0,
+                y: 20,
+                z: 20000000
+            },
+            tilt: 45
+        },
+        environment: {
+            lighting: {
+                date: new Date(),
+                directShadowsEnabled: true,
+                ambientOcclusionEnabled: true
+            },
+            atmosphere: {
+                quality: "high"
+            },
+            starsEnabled: true
+        }
+    });
+
+    // Create a graphics layer for custom points
+    const pointsLayer = new GraphicsLayer();
+    map.add(pointsLayer);
+
+    // Create a 3D symbol for custom points
+    const pointSymbol = new PointSymbol3D({
+        symbolLayers: [
+            new ObjectSymbol3DLayer({
+                width: 50000,
+                height: 50000,
+                resource: { primitive: "sphere" },
+                material: { color: [56, 189, 248, 0.8] }
+            })
+        ]
+    });
+
+    // Function to add point to map
+    function addPointToMap(lat, lon) {
+        // Clear existing points
+        pointsLayer.removeAll();
+
+        const point = new Point({
+            longitude: lon,
+            latitude: lat
+        });
+
+        const graphic = new Graphic({
+            geometry: point,
+            symbol: pointSymbol,
+            popupTemplate: {
+                title: "Custom Location",
+                content: `
+                    <div class="p-4">
+                        <p class="text-sm"><strong>Latitude:</strong> ${lat.toFixed(6)}</p>
+                        <p class="text-sm"><strong>Longitude:</strong> ${lon.toFixed(6)}</p>
+                    </div>
+                `
+            }
+        });
+
+        pointsLayer.add(graphic);
+
+        // Zoom to point
+        view.goTo({
+            target: point,
+            zoom: 10,
+            tilt: 60
+        }, {
+            duration: 2000,
+            easing: "ease-out"
+        });
+    }
+
+    // Wait for the view to be ready before setting up UI controls
+    view.when(() => {
+        // Add home widget
+        const homeBtn = new Home({
+            view: view
+        });
+        view.ui.add(homeBtn, "top-left");
+
+        // Add basemap gallery
+        const basemapGallery = new BasemapGallery({
+            view: view
+        });
+        view.ui.add(basemapGallery, {
+            position: "top-right"
+        });
+
+        // Add coordinate conversion widget
+        const ccWidget = new CoordinateConversion({
+            view: view
+        });
+        view.ui.add(ccWidget, "bottom-left");
+
+        // Set up event listeners
+        const showPointBtn = document.getElementById('showPoint');
+        const clearPointBtn = document.getElementById('clearPoint');
+        const zoomInBtn = document.getElementById('zoomIn');
+        const zoomOutBtn = document.getElementById('zoomOut');
+        const resetViewBtn = document.getElementById('resetView');
+
+        if (showPointBtn) {
+            showPointBtn.addEventListener('click', () => {
+                const lat = parseFloat(document.getElementById('latitude').value);
+                const lon = parseFloat(document.getElementById('longitude').value);
+
+                if (isNaN(lat) || isNaN(lon) || lat < -90 || lat > 90 || lon < -180 || lon > 180) {
+                    alert('Please enter valid coordinates:\nLatitude: -90 to 90\nLongitude: -180 to 180');
+                    return;
+                }
+
+                addPointToMap(lat, lon);
+            });
+        }
+
+        if (clearPointBtn) {
+            clearPointBtn.addEventListener('click', () => {
+                pointsLayer.removeAll();
+                document.getElementById('latitude').value = '';
+                document.getElementById('longitude').value = '';
+            });
+        }
+
+        if (zoomInBtn) {
+            zoomInBtn.addEventListener('click', () => {
+                view.goTo({
+                    zoom: view.zoom + 1
+                });
+            });
+        }
+
+        if (zoomOutBtn) {
+            zoomOutBtn.addEventListener('click', () => {
+                view.goTo({
+                    zoom: view.zoom - 1
+                });
+            });
+        }
+
+        if (resetViewBtn) {
+            resetViewBtn.addEventListener('click', () => {
+                view.goTo({
+                    position: {
+                        x: 0,
+                        y: 20,
+                        z: 20000000
+                    },
+                    tilt: 45
+                });
+            });
+        }
+
+        // Click on map to get coordinates
+        view.on("click", function(event) {
+            view.hitTest(event).then(function(response) {
+                const mapPoint = response.results[0]?.mapPoint;
+                if (mapPoint) {
+                    document.getElementById('latitude').value = mapPoint.latitude.toFixed(6);
+                    document.getElementById('longitude').value = mapPoint.longitude.toFixed(6);
+                }
+            });
+        });
+    });
+});
+
+// Add custom styles for the map
+const style = document.createElement('style');
+style.textContent = `
+    .esri-popup__header-title {
+        color: #0284c7;
+        font-weight: 600;
+    }
+    .esri-popup__content {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(8px);
+    }
+    .esri-widget {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(4px);
+    }
+    .esri-basemap-gallery {
+        max-height: 400px;
+    }
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+`;
+document.head.appendChild(style);
+</script>
+{% endblock %} 

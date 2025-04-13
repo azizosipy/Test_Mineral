@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="min-h-[80vh] flex flex-col items-center justify-center text-center relative">
+    <!-- Hero Section -->
+    <div class="space-y-6 max-w-4xl relative">
+        <!-- Decorative Elements -->
+        <div class="absolute -top-20 -left-20 w-40 h-40 bg-sky-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+        <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+        
+        <h1 class="text-7xl font-bold bg-gradient-to-r from-sky-300 via-blue-400 to-blue-500 bg-clip-text text-transparent animate-float relative">
+            Discover Hidden Treasures
+            <span class="absolute -top-8 -right-8 text-4xl animate-sparkle">✨</span>
+            <span class="absolute -bottom-8 -left-8 text-4xl animate-sparkle" style="animation-delay: 0.5s">✨</span>
+        </h1>
+        <p class="text-2xl text-blue-100 mt-4 max-w-2xl mx-auto">
+            Unlock the secrets beneath the Earth with our advanced AI-powered mineral prediction system
+        </p>
+        
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-16">
+            <div class="treasure-card p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:rotate-1 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-sky-400 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 sparkle">
+                    <i class="fas fa-microscope text-3xl text-white animate-glow"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4 bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent">
+                    Predict Minerals
+                </h3>
+                <p class="text-gray-600 mb-6">Harness the power of AI to uncover hidden mineral deposits with unprecedented accuracy</p>
+                <a href="/predict" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-sky-400 to-blue-600 text-white rounded-lg hover:from-sky-500 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl w-full group relative overflow-hidden">
+                    <span class="relative z-10">Begin Your Quest</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-sky-300 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform relative z-10"></i>
+                </a>
+            </div>
+            
+            <div class="crystal-card p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:rotate-1 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 sparkle">
+                    <i class="fas fa-chart-line text-3xl text-white animate-glow"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                    Analytics Dashboard
+                </h3>
+                <p class="text-gray-600 mb-6">Dive deep into the data with our comprehensive analytics and visualization tools</p>
+                <a href="/analytics" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-400 to-blue-600 text-white rounded-lg hover:from-blue-500 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl w-full group relative overflow-hidden">
+                    <span class="relative z-10">Explore Insights</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-300 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform relative z-10"></i>
+                </a>
+            </div>
+            
+            <div class="treasure-card p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 hover:rotate-1 group">
+                <div class="w-16 h-16 bg-gradient-to-br from-sky-400 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 sparkle">
+                    <i class="fas fa-database text-3xl text-white animate-glow"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-4 bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent">
+                    Data Explorer
+                </h3>
+                <p class="text-gray-600 mb-6">Navigate through our vast collection of geological data and mineral insights</p>
+                <a href="/explore" class="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-sky-400 to-blue-600 text-white rounded-lg hover:from-sky-500 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl w-full group relative overflow-hidden">
+                    <span class="relative z-10">Start Exploring</span>
+                    <div class="absolute inset-0 bg-gradient-to-r from-sky-300 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                    <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform relative z-10"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- How It Works Section -->
+        <div class="mt-24 crystal-card p-12 rounded-2xl shadow-xl relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-sky-200/20 to-transparent transform rotate-45 translate-x-32 -translate-y-32"></div>
+            <div class="absolute bottom-0 left-0 w-64 h-64 bg-gradient-to-tr from-blue-200/20 to-transparent transform -rotate-45 -translate-x-32 translate-y-32"></div>
+            
+            <h2 class="text-4xl font-semibold mb-12 bg-gradient-to-r from-sky-400 via-blue-500 to-blue-600 bg-clip-text text-transparent relative">
+                The Journey of Discovery
+                <span class="absolute -top-4 -right-4 text-3xl animate-sparkle">✨</span>
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative">
+                <div class="group/step">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-100 to-sky-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover/step:scale-110 transition-transform duration-500 sparkle">
+                        <i class="fas fa-upload text-sky-600 text-3xl group-hover/step:rotate-12 transition-transform"></i>
+                    </div>
+                    <div class="absolute h-0.5 bg-gradient-to-r from-sky-300 to-blue-300 top-10 left-[60%] w-full hidden md:block"></div>
+                    <h3 class="text-xl font-medium text-sky-100 mb-2">Begin Your Quest</h3>
+                    <p class="text-blue-200">Input your geological data</p>
+                </div>
+                
+                <div class="group/step">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover/step:scale-110 transition-transform duration-500 sparkle">
+                        <i class="fas fa-cogs text-blue-600 text-3xl group-hover/step:rotate-45 transition-transform"></i>
+                    </div>
+                    <div class="absolute h-0.5 bg-gradient-to-r from-blue-300 to-sky-300 top-10 left-[60%] w-full hidden md:block"></div>
+                    <h3 class="text-xl font-medium text-blue-100 mb-2">AI Analysis</h3>
+                    <p class="text-blue-200">Advanced processing begins</p>
+                </div>
+                
+                <div class="group/step">
+                    <div class="w-20 h-20 bg-gradient-to-br from-sky-100 to-sky-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover/step:scale-110 transition-transform duration-500 sparkle">
+                        <i class="fas fa-magic text-sky-600 text-3xl group-hover/step:rotate-12 transition-transform"></i>
+                    </div>
+                    <div class="absolute h-0.5 bg-gradient-to-r from-sky-300 to-blue-300 top-10 left-[60%] w-full hidden md:block"></div>
+                    <h3 class="text-xl font-medium text-sky-100 mb-2">Reveal Treasures</h3>
+                    <p class="text-blue-200">Discover mineral predictions</p>
+                </div>
+                
+                <div class="group/step">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover/step:scale-110 transition-transform duration-500 sparkle">
+                        <i class="fas fa-chart-pie text-blue-600 text-3xl group-hover/step:rotate-45 transition-transform"></i>
+                    </div>
+                    <h3 class="text-xl font-medium text-blue-100 mb-2">Unlock Insights</h3>
+                    <p class="text-blue-200">Explore detailed analysis</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

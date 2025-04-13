@@ -1,0 +1,385 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 py-8 relative">
+    <!-- Decorative Elements -->
+    <div class="absolute top-20 -left-20 w-64 h-64 bg-sky-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+    <div class="absolute bottom-20 -right-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
+
+    <!-- Hero Section -->
+    <div class="text-center mb-12 relative">
+        <h1 class="text-6xl font-bold bg-gradient-to-r from-sky-300 via-blue-400 to-blue-500 bg-clip-text text-transparent animate-float relative inline-block">
+            Advanced Analytics
+            <span class="absolute -top-6 -right-6 text-4xl animate-sparkle">✨</span>
+            <span class="absolute -bottom-6 -left-6 text-4xl animate-sparkle" style="animation-delay: 0.5s">✨</span>
+        </h1>
+        <p class="text-xl text-blue-100 mt-4 max-w-2xl mx-auto">
+            Discover patterns and insights in our comprehensive mineral deposit database
+        </p>
+    </div>
+
+    <!-- Distribution Charts Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <!-- Mineralogy Distribution -->
+        <div class="treasure-card rounded-2xl shadow-xl p-8 relative overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-sky-200/20 to-transparent transform rotate-45 translate-x-32 -translate-y-32"></div>
+            
+            <h2 class="text-2xl font-semibold mb-6 bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent flex items-center">
+                <i class="fas fa-gem mr-3 text-sky-500 animate-glow"></i>
+                Mineralogy Distribution
+            </h2>
+            
+            <div class="relative bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-sky-100">
+                <canvas id="mineralogyChart" class="w-full h-[300px]"></canvas>
+            </div>
+        </div>
+
+        <!-- Product Type Distribution -->
+        <div class="crystal-card rounded-2xl shadow-xl p-8 relative overflow-hidden group hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-200/20 to-transparent transform rotate-45 translate-x-32 -translate-y-32"></div>
+            
+            <h2 class="text-2xl font-semibold mb-6 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent flex items-center">
+                <i class="fas fa-chart-pie mr-3 text-blue-500 animate-glow"></i>
+                Product Type Distribution
+            </h2>
+            
+            <div class="relative bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-blue-100">
+                <canvas id="productTypeChart" class="w-full h-[300px]"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Advanced Analytics Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <!-- Correlation Analysis -->
+        <div class="treasure-card rounded-2xl shadow-xl p-8 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
+            <h2 class="text-2xl font-semibold mb-6 bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent flex items-center">
+                <i class="fas fa-project-diagram mr-3 text-sky-500"></i>
+                Feature Correlations
+            </h2>
+            <div class="relative bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-sky-100">
+                <canvas id="correlationChart" class="w-full h-[300px]"></canvas>
+            </div>
+        </div>
+
+        <!-- Time Series Analysis -->
+        <div class="crystal-card rounded-2xl shadow-xl p-8 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
+            <h2 class="text-2xl font-semibold mb-6 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent flex items-center">
+                <i class="fas fa-chart-line mr-3 text-blue-500"></i>
+                Discovery Trends
+            </h2>
+            <div class="relative bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-blue-100">
+                <canvas id="discoveryTrendsChart" class="w-full h-[300px]"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Geological Insights Section -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+        <!-- Tectonic Settings Analysis -->
+        <div class="crystal-card rounded-2xl shadow-xl p-8 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
+            <h2 class="text-2xl font-semibold mb-6 bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent flex items-center">
+                <i class="fas fa-globe mr-3 text-blue-500"></i>
+                Tectonic Settings
+            </h2>
+            <div class="relative bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-blue-100">
+                <canvas id="tectonicChart" class="w-full h-[300px]"></canvas>
+            </div>
+        </div>
+
+        <!-- Host Rock Distribution -->
+        <div class="treasure-card rounded-2xl shadow-xl p-8 relative overflow-hidden group hover:shadow-2xl transition-all duration-300">
+            <h2 class="text-2xl font-semibold mb-6 bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent flex items-center">
+                <i class="fas fa-mountain mr-3 text-sky-500"></i>
+                Host Rock Types
+            </h2>
+            <div class="relative bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-sky-100">
+                <canvas id="hostRockChart" class="w-full h-[300px]"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Predictive Analytics Section -->
+    <div class="treasure-card rounded-3xl shadow-2xl p-12 relative overflow-hidden">
+        <div class="absolute inset-0 border-4 border-sky-200/30 rounded-3xl pointer-events-none">
+            <div class="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-sky-400/40 rounded-tl-2xl"></div>
+            <div class="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-sky-400/40 rounded-tr-2xl"></div>
+            <div class="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-sky-400/40 rounded-bl-2xl"></div>
+            <div class="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-sky-400/40 rounded-br-2xl"></div>
+        </div>
+
+        <h2 class="text-3xl font-semibold mb-8 bg-gradient-to-r from-sky-400 via-blue-500 to-blue-600 bg-clip-text text-transparent">
+            Predictive Insights
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Model Performance -->
+            <div class="bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-sky-100">
+                <div class="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-brain text-white text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-blue-800 mb-2">Model Performance</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Accuracy</span>
+                        <span class="text-blue-600 font-semibold">94.5%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Precision</span>
+                        <span class="text-blue-600 font-semibold">92.8%</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-600">Recall</span>
+                        <span class="text-blue-600 font-semibold">93.2%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Importance -->
+            <div class="bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-sky-100">
+                <div class="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-list-ol text-white text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-blue-800 mb-2">Feature Importance</h3>
+                <div class="space-y-2">
+                    <div class="relative pt-1">
+                        <div class="flex mb-2 items-center justify-between">
+                            <div>
+                                <span class="text-xs font-semibold inline-block text-blue-600">Geochemical Data</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-semibold inline-block text-blue-600">85%</span>
+                            </div>
+                        </div>
+                        <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
+                            <div style="width:85%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
+                        </div>
+                    </div>
+                    <div class="relative pt-1">
+                        <div class="flex mb-2 items-center justify-between">
+                            <div>
+                                <span class="text-xs font-semibold inline-block text-blue-600">Structural Features</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="text-xs font-semibold inline-block text-blue-600">75%</span>
+                            </div>
+                        </div>
+                        <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
+                            <div style="width:75%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prediction Confidence -->
+            <div class="bg-white/60 backdrop-blur-sm rounded-xl p-6 border-2 border-sky-100">
+                <div class="w-12 h-12 bg-gradient-to-br from-sky-400 to-blue-500 rounded-lg flex items-center justify-center mb-4">
+                    <i class="fas fa-chart-bar text-white text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-blue-800 mb-2">Prediction Confidence</h3>
+                <canvas id="confidenceChart" class="w-full h-[150px]"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Mineralogy Distribution Chart
+    const mineralogyChart = new Chart(document.getElementById('mineralogyChart'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Gold', 'Silver', 'Copper', 'Iron', 'Others'],
+            datasets: [{
+                data: [30, 25, 20, 15, 10],
+                backgroundColor: [
+                    '#38BDF8',
+                    '#60A5FA',
+                    '#3B82F6',
+                    '#2563EB',
+                    '#1D4ED8'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Product Type Distribution Chart
+    const productTypeChart = new Chart(document.getElementById('productTypeChart'), {
+        type: 'bar',
+        data: {
+            labels: ['Precious Metals', 'Base Metals', 'Industrial Minerals', 'Rare Earth'],
+            datasets: [{
+                label: 'Distribution',
+                data: [40, 30, 20, 10],
+                backgroundColor: [
+                    'rgba(56, 189, 248, 0.7)',
+                    'rgba(96, 165, 250, 0.7)',
+                    'rgba(59, 130, 246, 0.7)',
+                    'rgba(37, 99, 235, 0.7)'
+                ],
+                borderColor: [
+                    'rgb(56, 189, 248)',
+                    'rgb(96, 165, 250)',
+                    'rgb(59, 130, 246)',
+                    'rgb(37, 99, 235)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Correlation Analysis Chart
+    const correlationChart = new Chart(document.getElementById('correlationChart'), {
+        type: 'radar',
+        data: {
+            labels: ['Geochemistry', 'Structure', 'Depth', 'Age', 'Alteration'],
+            datasets: [{
+                label: 'Feature Correlation',
+                data: [85, 75, 60, 70, 80],
+                backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                borderColor: 'rgb(56, 189, 248)',
+                pointBackgroundColor: 'rgb(56, 189, 248)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(56, 189, 248)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Discovery Trends Chart
+    const discoveryTrendsChart = new Chart(document.getElementById('discoveryTrendsChart'), {
+        type: 'line',
+        data: {
+            labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+            datasets: [{
+                label: 'New Discoveries',
+                data: [45, 52, 48, 60, 55, 58],
+                borderColor: 'rgb(56, 189, 248)',
+                backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Tectonic Settings Chart
+    const tectonicChart = new Chart(document.getElementById('tectonicChart'), {
+        type: 'radar',
+        data: {
+            labels: ['Rift', 'Convergent', 'Transform', 'Passive Margin', 'Cratonic'],
+            datasets: [{
+                label: 'Distribution',
+                data: [65, 75, 45, 55, 60],
+                backgroundColor: 'rgba(56, 189, 248, 0.2)',
+                borderColor: 'rgb(56, 189, 248)',
+                pointBackgroundColor: 'rgb(56, 189, 248)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgb(56, 189, 248)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+    // Host Rock Chart
+    const hostRockChart = new Chart(document.getElementById('hostRockChart'), {
+        type: 'polarArea',
+        data: {
+            labels: ['Granite', 'Basalt', 'Limestone', 'Sandstone', 'Schist'],
+            datasets: [{
+                data: [30, 25, 20, 15, 10],
+                backgroundColor: [
+                    'rgba(56, 189, 248, 0.7)',
+                    'rgba(96, 165, 250, 0.7)',
+                    'rgba(59, 130, 246, 0.7)',
+                    'rgba(37, 99, 235, 0.7)',
+                    'rgba(29, 78, 216, 0.7)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Confidence Chart
+    const confidenceChart = new Chart(document.getElementById('confidenceChart'), {
+        type: 'bar',
+        data: {
+            labels: ['High', 'Medium', 'Low'],
+            datasets: [{
+                label: 'Prediction Confidence',
+                data: [65, 25, 10],
+                backgroundColor: [
+                    'rgba(56, 189, 248, 0.7)',
+                    'rgba(96, 165, 250, 0.7)',
+                    'rgba(59, 130, 246, 0.7)'
+                ],
+                borderColor: [
+                    'rgb(56, 189, 248)',
+                    'rgb(96, 165, 250)',
+                    'rgb(59, 130, 246)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %} 
